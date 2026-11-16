@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "name": "Since white workspace",
+  "surface": "chat workspace",
+  "mode": "operate",
+  "tokens": {
+    "color": {
+      "background": "#f7f8fa",
+      "surface": "#ffffff",
+      "surfaceMuted": "#f1f4f2",
+      "text": "#17201c",
+      "muted": "#68746d",
+      "border": "#e1e7e3",
+      "borderStrong": "#c5d0c9",
+      "accent": "#16775b",
+      "accentStrong": "#0f624a",
+      "accentSoft": "#e8f4ee",
+      "warning": "#98631a",
+      "danger": "#b23b3b"
+    },
+    "layout": {
+      "sidebar": "276px",
+      "contentMax": "960px",
+      "bodyMeasure": "75ch",
+      "radius": "14px"
+    },
+    "type": {
+      "ui": "ui-sans-serif, Segoe UI Variable, Segoe UI, system-ui, sans-serif",
+      "data": "ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace",
+      "bodySize": "16px"
+    }
+  },
+  "signature": "A persistent conversation rail paired with open, evidence-first answer surfaces."
+}

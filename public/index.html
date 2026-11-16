@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light" />
+    <meta name="description" content="Since remembers what it told you, when it learned it, and whether the source still agrees." />
+    <title>Since — ask what changed</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%2316775b'/%3E%3Cpath d='M22.3 9.7c-1.5-1.2-3.5-1.8-5.9-1.8-3.6 0-6.2 1.7-6.2 4.3 0 2.7 2.4 3.7 6.1 4.5 3.2.7 4.1 1.2 4.1 2.5 0 1.4-1.3 2.3-3.7 2.3-2.3 0-4.2-.7-5.7-2.1' fill='none' stroke='%23fff' stroke-width='2.7' stroke-linecap='round'/%3E%3Ccircle cx='23' cy='22.8' r='2.1' fill='%23bdeed8'/%3E%3C/svg%3E"
+    />
+    <link rel="stylesheet" href="/style.css" />
+    <script type="module" src="/app.js"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to conversation</a>
+
+    <div class="app-layout">
+      <aside
+        id="sessions-panel"
+        class="sessions-panel"
+        role="complementary"
+        aria-labelledby="sessions-title"
+        aria-hidden="false"
+      >
+        <div class="sessions-inner">
+          <div class="sidebar-topline">
+            <div>
+              <h2 id="sessions-title">Conversations</h2>
+              <p class="sidebar-description">Your recent chats</p>
+            </div>
+            <button
+              id="close-sessions"
+              class="sidebar-close icon-button"
+              type="button"
+              aria-label="Collapse conversations sidebar"
+              aria-expanded="true"
+              aria-controls="sessions-panel"
+              title="Collapse sidebar"
+            >
+              <svg aria-hidden="true" viewBox="0 0 24 24" fill="none">
+                <path d="m14.5 6-6 6 6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              <span class="sr-only">Collapse sidebar</span>
+            </button>
+          </div>
+
+          <button id="new-chat" class="btn btn-primary sidebar-new" type="button">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none">
+              <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+            </svg>
+            <span>New chat</span>
+          </button>
+
+          <label class="session-search" for="session-search">
+            <span class="sr-only">Search conversations</span>
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none">
+              <circle cx="11" cy="11" r="5.8" stroke="currentColor" stroke-width="1.7" />
+              <path d="m16 16 4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" />
+            </svg>
+            <input id="session-search" type="search" placeholder="Search conversations" autocomplete="off" />
+          </label>
+
+          <div class="history-heading">
+            <h3 id="recent-title">Recent</h3>
+          </div>
+          <ul id="sessions-list" class="sessions-list" aria-labelledby="recent-title"></ul>
+          <p id="sessions-empty" class="muted sessions-empty" hidden>No sessions yet. Start a chat or load the demo history.</p>
+          <p id="sessions-error" class="error-text" role="alert" hidden></p>
+
+          <div class="sidebar-footer">
+            <button id="load-demo" class="sidebar-link" type="button">Load demo history</button>
+            <p class="sidebar-note">History is stored locally for this workspace.</p>
+          </div>
+        </div>
+      </aside>
+
+      <button id="sidebar-scrim" class="sidebar-scrim" type="button" aria-label="Close conversations sidebar" aria-hidden="true" tabindex="-1"></button>
+
+      <div class="workspace">
+        <header class="site-header">
+          <div class="shell header-row">
+            <a class="brand" href="/" aria-label="Since home">Since</a>
+            <span class="brand-note">Memory, checked</span>
+            <span id="demo-badge" class="badge badge-demo" hidden>Demo history (synthetic)</span>
+            <div class="header-actions" role="group" aria-label="Chat actions">
+              <button
+                id="sessions-toggle"
+                class="btn btn-quiet sidebar-toggle"
+                type="button"
+                aria-expanded="false"
+                aria-controls="sessions-panel"
+                aria-label="Show conversations sidebar"
+                title="Show conversations sidebar"
+              >
+                <svg aria-hidden="true" viewBox="0 0 24 24" fill="none">
+                  <path d="M4 6.5h16M4 12h16M4 17.5h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+                </svg>
+                History
+              </button>
+              <button id="export-chat" class="btn btn-quiet" type="button">Export</button>
+            </div>
+          </div>
+        </header>
+
+        <main id="main" class="main" tabindex="-1">
+          <div class="shell">
+            <section id="landing" class="landing" aria-labelledby="landing-title">
+              <div class="landing-intro">
+                <h1 id="landing-title">Ask <span>what changed.</span></h1>
+                <p class="lede">
+                  Since remembers what it told you, when it learned it, and whether the source still agrees.
+                </p>
+              </div>
+              <div id="examples" class="examples" role="group" aria-label="Suggested prompts"></div>
+              <p id="demo-note" class="muted demo-note" role="status" hidden></p>
+            </section>
+
+            <ol id="messages" class="messages"></ol>
+          </div>
+
+          <div class="composer-dock">
+            <div class="shell">
+              <form id="composer" class="composer" aria-busy="false">
+                <div id="attachment-note" class="attachment-note" role="status" hidden>
+                  <span id="attachment-name"></span>
+                  <button id="remove-attachment" class="attachment-remove" type="button">Remove</button>
+                </div>
+                <div class="composer-row">
+                  <label class="sr-only" for="message">Message</label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    rows="1"
+                    maxlength="8000"
+                    placeholder="Ask a question or revisit a decision…"
+                    aria-describedby="composer-hint"
+                    required
+                  ></textarea>
+                  <div class="composer-actions">
+                    <input id="file-input" type="file" accept=".txt,.md,.csv,.json,.log,.ts,.js,.py,.html,.css" hidden />
+                    <button id="attach-file" class="btn btn-tool" type="button">Attach</button>
+                    <button id="send" class="btn btn-primary send" type="submit">Send</button>
+                  </div>
+                </div>
+              </form>
+              <p id="composer-hint" class="hint">Enter to send · Shift+Enter for a new line · Text files supported</p>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>

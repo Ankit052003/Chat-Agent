@@ -1,0 +1,9 @@
+# One-minute video script
+
+Hi, I built Since as a local chat agent for questions whose answers can change over time.
+
+The backend uses Fastify and SQLite, with LangGraph to keep the workflow explicit. Each request is classified by intent and date. The agent recalls relevant conversation memory and researches current public evidence when necessary. Sources are normalized into structured observations, and comparisons such as price changes are calculated in code instead of guessed by the language model. The answer is generated, checked against evidence, repaired if needed, and streamed into the browser.
+
+I chose this architecture because it is fast, inspectable, and honest about uncertainty. The sidebar helps users resume, search, and delete conversations, while the white-and-green interface stays calm and readable.
+
+The goal is simple: answer quickly, show what changed, and never present an unsupported claim as verified fact.
